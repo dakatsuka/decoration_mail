@@ -1,7 +1,2 @@
 = DecorationMail : support for DoCoMo, au, Softbank
-
-== DecorationMailとは
-DoCoMo, au, Softbankの携帯電話で使用されているデコメールをパースするライブラリです。
-今のところ受信したデコメールをパースする方に主眼を置いています。
-
-なおまだ作り途中です。
+まだ作り途中です！すみません
