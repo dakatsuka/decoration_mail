@@ -2,7 +2,7 @@
 
 module DecorationMail
   module Message
-    def decoration_data
+    def decoration
       if html_part
         DecorationMail::Base.new(self)
       else
