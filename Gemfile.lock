@@ -3,6 +3,7 @@ GEM
   specs:
     activesupport (3.0.3)
     diff-lcs (1.1.2)
+    hpricot (0.8.3)
     i18n (0.5.0)
     mail (2.2.15)
       activesupport (>= 2.3.6)
@@ -10,7 +11,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    nokogiri (1.4.4)
     polyglot (0.3.1)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -27,6 +27,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  hpricot (>= 0.8.3)
   mail (>= 2.2.15)
-  nokogiri (>= 1.4.4)
   rspec (>= 2.5.0)
