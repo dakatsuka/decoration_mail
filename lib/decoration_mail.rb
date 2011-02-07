@@ -3,6 +3,9 @@ $:.unshift(File.dirname(__FILE__))
 
 require 'mail'
 require 'nokogiri'
+require 'nkf'
 
-module DecorationMail
-end
+require 'decoration_mail/base'
+require 'decoration_mail/message'
+
+Mail::Message.send :include, DecorationMail::Message
