@@ -3,15 +3,16 @@
 module DecorationMail
   module Converter
     def self.convert_to_xhtml(html)
-      html = convert_from_body_to_div(html)
-      html = convert_from_font_color_to_css(html)
-      html = convert_from_align_to_css(html)
-      html = convert_from_blink_to_css(html)
-      html = convert_from_marquee_to_css(html)
+      html = convert_body_to_div(html)
+      html = convert_font_color_to_css(html)
+      html = convert_font_size_to_css(html)
+      html = convert_align_to_css(html)
+      html = convert_blink_to_css(html)
+      html = convert_marquee_to_css(html)
     end
 
     private
-    def self.convert_from_body_to_div(html)
+    def self.convert_body_to_div(html)
       html.search("body").each do |body|
         if body[:bgcolor]
           body.swap('<div style="background-color:' + body[:bgcolor] + ';">' + body.inner_html + '</div>')
@@ -19,10 +20,10 @@ module DecorationMail
           body.swap("<div>#{body.inner_html}</div>")
         end
       end
-      html.at("div")
+      html
     end
 
-    def self.convert_from_font_color_to_css(html)
+    def self.convert_font_color_to_css(html)
       html.search("font").each do |element|
         if element[:color]
           str = "<span>#{element.inner_html}</span>"
@@ -34,7 +35,7 @@ module DecorationMail
       html
     end
 
-    def self.convert_from_font_size_to_css(html)
+    def self.convert_font_size_to_css(html)
       html.search("font").each do |element|
         if element[:size]
           str = "<span>#{element.inner_html}</span>"
@@ -64,7 +65,7 @@ module DecorationMail
       html
     end
 
-    def self.convert_from_align_to_css(html)
+    def self.convert_align_to_css(html)
       html.search("div").each do |element|
         if element[:align]
           str = "<div>#{element.inner_html}</div>"
@@ -77,14 +78,14 @@ module DecorationMail
       html
     end
 
-    def self.convert_from_blink_to_css(html)
+    def self.convert_blink_to_css(html)
       html.search("blink").each do |element|
         element.swap('<span style="text-decoration:blink;">' + element.inner_html + '</span>')
       end
       html
     end
 
-    def self.convert_from_marquee_to_css(html)
+    def self.convert_marquee_to_css(html)
       html.search("marquee").each do |element|
         if element[:behavior] == "scroll"
           element.swap('<div style="display:-wap-marquee;-wap-marquee-loop:infinite;">' + element.inner_html + '</div>')
