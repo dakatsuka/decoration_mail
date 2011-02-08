@@ -6,6 +6,7 @@ require 'hpricot'
 require 'nkf'
 
 require 'decoration_mail/converter'
+require 'decoration_mail/image'
 require 'decoration_mail/base'
 require 'decoration_mail/message'
 
