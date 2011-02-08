@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'mail',     '>=2.2.15'
+gem 'mail',     '>=2.2.9'
 gem 'hpricot',  '>=0.8.3'
 
 group :development, :test do
