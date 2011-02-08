@@ -17,7 +17,7 @@ module DecorationMail
         file_name    = attachment.filename
 
         next unless check_content_type(content_type)
-        images << DecorationMail::Image.new(content_id, content_type, file_name, attachment.read)
+        images << DecorationMail::Image.new(content_id, content_type, file_name, attachment)
       end
 
       images

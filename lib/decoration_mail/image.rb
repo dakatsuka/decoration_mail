@@ -3,13 +3,17 @@
 module DecorationMail
   class Image
     attr_accessor :path
-    attr_reader :content_id, :filename, :body
+    attr_reader :content_id, :filename
 
-    def initialize(content_id, content_type, filename, body)
+    def initialize(content_id, content_type, filename, attachment)
       @content_id   = (content_id == "cid:" ? nil : content_id)
       @content_type = content_type
       @filename     = filename
-      @body         = body
+      @attachment   = attachment
+    end
+
+    def body
+      @attachment.read
     end
 
     def extension
