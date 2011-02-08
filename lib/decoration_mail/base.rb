@@ -54,7 +54,14 @@ module DecorationMail
     def parse_html(html)
       html = NKF.nkf("-w", html.body.to_s)
       html = Hpricot.parse(html)
-      html = DecorationMail::Converter.convert_to_xhtml(html)
+
+      if html.search("body").empty?
+        raise ArgumentError, 'invalid HTML'
+      else
+        html = DecorationMail::Converter.convert_to_xhtml(html).at('div')
+      end
+
+      html
     end
 
     def check_content_type(content_type)
