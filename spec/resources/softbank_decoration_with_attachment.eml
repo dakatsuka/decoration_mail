@@ -1,14 +1,7 @@
-Return-Path: <kirin7x7@softbank.ne.jp>
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	ist-www1.ist-corp.jp
-X-Spam-Level: ****
-X-Spam-Status: No, score=4.5 required=7.0 tests=CONTENT_TYPE_PRESENT,
-	DNS_FROM_RFC_ABUSE,DNS_FROM_RFC_POST,FAKEDWORD_ONE,
-	FAKEDWORD_VERTICALLINE,FAKEDWORD_ZERO,HTML_IMAGE_ONLY_12,HTML_MESSAGE,
-	ISO2022JP_BODY,QENCPTR1,QENCPTR2 autolearn=no version=3.1.7-deb3
+Return-Path: <example@softbank.ne.jp>
 X-Original-To: d.akatsuka@ist-corp.jp
 Delivered-To: akatsuka@ist-corp.jp
-Received: from mmrts045p01c.softbank.ne.jp (mmrts045p01c.softbank.ne.jp [123.108.239.19])
+Received: from xxxxx.softbank.ne.jp (xxxxx.softbank.ne.jp [255.255.255.255])
 	by ist-corp.jp (Postfix) with SMTP id 962DB38280
 	for <d.akatsuka@ist-corp.jp>; Tue,  8 Feb 2011 16:36:43 +0900 (JST)
 Subject: =?ISO-2022-JP?B?GyRCJUclMyVhITwlaxsoQg==?=
@@ -17,9 +10,9 @@ Content-Type:multipart/related;
 	boundary="aadbeiviljhdlcec_942SH"
 Date: Tue, 08 Feb 2011 16:36:43 +0900
 Message-ID: <20110208163643282885.3543@0016E68C4108>
-From: <kirin7x7@softbank.ne.jp>
+From: <example@softbank.ne.jp>
 To: d.akatsuka@ist-corp.jp
-Sender:kirin7x7@softbank.ne.jp
+Sender:example@softbank.ne.jp
 X-Priority: 3
 
 
