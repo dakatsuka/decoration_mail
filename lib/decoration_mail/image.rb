@@ -15,13 +15,13 @@ module DecorationMail
     def extension
       case @content_type
       when /^image\/gif/
-        ".gif"
+        "gif"
       when /^image\/jpg/
-        ".jpg"
+        "jpg"
       when /^image\/jpeg/
-        ".jpg"
+        "jpg"
       when /^image\/png/
-        ".png"
+        "png"
       else
         nil
       end
