@@ -6,7 +6,7 @@ module DecorationMail
     attr_reader :content_id, :filename, :body
 
     def initialize(content_id, content_type, filename, body)
-      @content_id   = content_id
+      @content_id   = (content_id == "cid:" ? nil : content_id)
       @content_type = content_type
       @filename     = filename
       @body         = body

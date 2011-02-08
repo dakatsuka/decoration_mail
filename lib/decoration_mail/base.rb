@@ -27,7 +27,7 @@ module DecorationMail
       images.each do |image|
         image.instance_eval(&block)
 
-        if @body_html.inner_html =~ /#{image.content_id}/
+        if image.content_id
           @body_html.search("img").each do |element|
             if element[:src] == image.content_id
               element[:src] = (image.path ? image.path : image.filename)
