@@ -1,2 +1,39 @@
-= DecorationMail : support for DoCoMo, au, Softbank
-まだ作り途中です！すみません
+= DecorationMail
+まだ作り途中です！＞＜
+
+== DecorationMailとは
+携帯電話で作成されたデコレーションメール（デコメール）をRubyで扱いやすくするためのライブラリです。
+今のところ受信したメールをパースするのみでデコメールの新規作成は出来ません。そのうち実装するかもしれません。。。
+
+== 使用例
+Rails3でも採用されているMailライブラリから呼び出して使用します。
+
+=== 基本的な使い方
+
+  require 'mail
+  require 'decoration_mail'
+
+  @mail = Mail.read('/path/to')
+  @deco = @mail.decoration
+
+  @html = @deco.save do |image|
+    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.body)}
+  end
+
+  puts @html # => "<div ...."
+
+=== 画像のURLを指定する
+
+  @html = @deco.save do |image|
+    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.body)}
+    image.path = "http://xxxxxx/#{image.filename}"
+  end
+
+=== 本文で使用されていない添付画像を追加する
+
+  # 本文上部に追加
+  @html = @deco.save(:other_images => :top) do |image|
+  .....
+
+  # 本文下部に追加
+  @html = @deco.save(:other_images => :bottom) do |image|
