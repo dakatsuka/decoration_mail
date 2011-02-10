@@ -10,6 +10,7 @@ describe DecorationMail::Base do
   subject { @deco }
 
   it { should have(7).images }
+  its(:subject) { should eql @mail.subject }
 
   context "using save method" do
     it "ブロック付きで呼び出すべき" do

@@ -4,8 +4,13 @@ module DecorationMail
   class Base
     def initialize(mail)
       @attachments = mail.attachments
+      @subject     = NKF.nkf("-w", mail.subject)
       @body_text   = parse_text(mail.text_part)
       @body_html   = parse_html(mail.html_part)
+    end
+
+    def subject
+      @subject
     end
 
     def images
