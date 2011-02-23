@@ -13,6 +13,11 @@ module DecorationMail
     end
 
     def body
+      warn "[DEPRECATION] 'body' is deprecated. Please use 'read'"
+      @attachment.read
+    end
+
+    def read
       @attachment.read
     end
 
