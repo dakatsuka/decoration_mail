@@ -1,45 +1,53 @@
-= DecorationMail
-
-== DecorationMailとは
+= DecorationMailとは
 携帯電話で作成されたデコレーションメール（デコメール）をRubyで扱いやすくするためのライブラリです。
-
 今のところ受信したメールをパースするのみでデコメールの新規作成は出来ません。そのうち実装するかもしれません。。。
 
-== インストール
+=== 特徴
+* Rails3から採用されたActionMailerのバックエンド、Mailライブラリを少し拡張して利用します。
+* デコメールのHTMLをXHTMLとインラインCSSに変換します。
+* デコメールのHTMLからHTMLタグ、HEADタグ、BODYタグが削除されて本文のみ取得出来ます。
+* デコメール画像のURLをContent-IDから自動でファイル名に置き換えます（変更可能）。
+
+= インストール
+通常
 
   gem install decoration_mail
 
+Rails3 ( bundler )
 
-== 使用例
+  gem 'decoration_mail'
+
+
+= 使用例
 Rails3でも採用されているMailライブラリのMail::Messageを拡張しています。
 
 decorationメソッドで本ライブラリの機能を呼び出す事が出来ます。
 
-=== 基本的な使い方
+== 基本的な使い方
 
   require 'mail
   require 'decoration_mail'
 
-  @mail = Mail.read('/path/to')
+  @mail = Mail.read('/path/to/foobar.eml')
   @deco = @mail.decoration
 
   @html = @deco.save do |image|
-    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.body)}
+    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.read)}
   end
 
   puts @html # => "<div ...."
 
-=== 画像のURLを指定する
+== 画像のURLを指定する
 image.pathにURIを代入することで、出力されるHTMLの<img src="">を書き換えます。
 
 MogileFSなどのストレージを利用する場合に使用すると便利でしょう。
 
   @html = @deco.save do |image|
-    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.body)}
+    File.open("/path/to/#{image.filename}", "wb") {|f| f.write(image.read)}
     image.path = "http://xxxxxx/#{image.filename}"
   end
 
-=== 本文（デコレーション）で使用されていない添付画像をHTMLに追加する
+== 本文（デコレーション）で使用されていない添付画像をHTMLに追加する
 
   # 本文上部に追加
   @html = @deco.save(:other_images => :top) do |image|
