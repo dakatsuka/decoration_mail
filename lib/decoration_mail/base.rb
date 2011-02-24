@@ -18,7 +18,8 @@ module DecorationMail
 
       @attachments.each do |attachment|
         content_type = attachment.header['content-type'].to_s
-        content_id   = "cid:" + attachment.header['content-id'].to_s.sub(/^</, '').sub(/>$/, '')
+        content_id   = attachment.header['content-id'].to_s.sub(/^</, '').sub(/>$/, '')
+        content_id   = attachment.filename unless content_id
         file_name    = attachment.filename
 
         next unless check_content_type(content_type)
@@ -32,7 +33,7 @@ module DecorationMail
       images.each do |image|
         image.instance_eval(&block)
 
-        if image.content_id
+        if @body_html.inner_html =~ /#{image.content_id}/
           @body_html.search("img").each do |element|
             if element[:src] == image.content_id
               element[:src] = (image.path ? image.path : image.filename)

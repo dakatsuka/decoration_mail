@@ -57,17 +57,13 @@ describe DecorationMail::Base do
     end
 
     it "other_imagesオプションで:topを指定すると添付画像をデコメ上部に貼り付ける" do
-      html = subject.save(:other_images => :top) do |image|
-        image.path = "other_image.jpg" unless image.content_id
-      end
-      html.should match /other_image\.jpg/
+      html = subject.save(:other_images => :top) {}
+      html.should match /20110205153513\.jpg/
     end
 
     it "other_imagesオプションで:bottomを指定すると添付画像をデコメ上部に貼り付ける" do
-      html = subject.save(:other_images => :bottom) do |image|
-        image.path = "other_image.jpg" unless image.content_id
-      end
-      html.should match /other_image\.jpg/
+      html = subject.save(:other_images => :bottom) {}
+      html.should match /20110205153513\.jpg/
     end
   end
 end
