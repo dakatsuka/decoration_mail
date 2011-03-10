@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{decoration_mail}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dai Akatsuka"]
-  s.date = %q{2011-02-24}
+  s.date = %q{2011-03-10}
   s.description = %q{Decoration Mail Parser}
   s.email = %q{d.akatsuka@gmail.com}
   s.extra_rdoc_files = [
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     "spec/resources/au_decoration_with_attachment.eml",
     "spec/resources/docomo_decoration.eml",
     "spec/resources/docomo_decoration_with_attachment.eml",
+    "spec/resources/other_decoration.eml",
     "spec/resources/softbank_decoration.eml",
     "spec/resources/softbank_decoration_with_attachment.eml",
     "spec/spec_helper.rb",
@@ -42,7 +43,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{https://github.com/dakatsuka/decoration_mail}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{Decoration Mail Parser}
   s.test_files = [
     "spec/spec_helper.rb",
@@ -52,7 +53,6 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
