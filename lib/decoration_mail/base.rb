@@ -2,11 +2,11 @@
 
 module DecorationMail
   class Base
-    attr_reader :images, :subject, :body_html
+    attr_reader :images, :subject
 
     def initialize(mail)
       each_attachments(mail)
-      @subject     = NKF.nkf("-w", mail.subject)
+      @subject     = mail.subject.encode("UTF-8")
       @body_text   = parse_text(mail.text_part)
       @body_html   = parse_html(mail.html_part)
     end
@@ -36,11 +36,11 @@ module DecorationMail
 
     private
       def parse_text(text)
-        NKF.nkf("-w", text.to_s)
+        text.to_s.encode("UTF-8")
       end
 
       def parse_html(html)
-        html = NKF.nkf("-w", html.body.to_s)
+        html = html.body.to_s.encode("UTF-8")
         html = Hpricot.parse(html)
 
         if html.search("body").empty?
