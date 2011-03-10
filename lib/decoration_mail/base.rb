@@ -2,41 +2,23 @@
 
 module DecorationMail
   class Base
+    attr_reader :images, :subject, :body_html
+
     def initialize(mail)
-      @attachments = mail.attachments
+      each_attachments(mail)
       @subject     = NKF.nkf("-w", mail.subject)
       @body_text   = parse_text(mail.text_part)
       @body_html   = parse_html(mail.html_part)
     end
 
-    def subject
-      @subject
-    end
-
-    def images
-      images = []
-
-      @attachments.each do |attachment|
-        content_type = attachment.header['content-type'].to_s
-        content_id   = attachment.header['content-id'].to_s.sub(/^</, '').sub(/>$/, '')
-        content_id   = attachment.filename unless content_id
-        file_name    = attachment.filename
-
-        next unless check_content_type(content_type)
-        images << DecorationMail::Image.new(content_id, content_type, file_name, attachment)
-      end
-
-      images
-    end
-
     def save(options = {}, &block)
-      images.each do |image|
+      @images.each do |image|
         image.instance_eval(&block)
 
         if @body_html.inner_html =~ /#{image.content_id}/
           @body_html.search("img").each do |element|
             if element[:src] == image.content_id
-              element[:src] = (image.path ? image.path : image.filename)
+              element[:src] = (image.path ? image.path : image.filename.to_s)
             end
           end
         else
@@ -53,36 +35,56 @@ module DecorationMail
     end
 
     private
-    def parse_text(text)
-      NKF.nkf("-w", text.to_s)
-    end
-
-    def parse_html(html)
-      html = NKF.nkf("-w", html.body.to_s)
-      html = Hpricot.parse(html)
-
-      if html.search("body").empty?
-        raise ArgumentError, 'invalid HTML'
-      else
-        html = DecorationMail::Converter.convert_to_xhtml(html).at('div')
+      def parse_text(text)
+        NKF.nkf("-w", text.to_s)
       end
 
-      html
-    end
+      def parse_html(html)
+        html = NKF.nkf("-w", html.body.to_s)
+        html = Hpricot.parse(html)
 
-    def check_content_type(content_type)
-      case content_type
-      when /^image\/gif/
-        true
-      when /^image\/jpg/
-        true
-      when /^image\/jpeg/
-        true
-      when /^image\/png/
-        true
-      else
-        false
+        if html.search("body").empty?
+          raise ArgumentError, 'invalid HTML'
+        else
+          html = DecorationMail::Converter.convert_to_xhtml(html).at('div')
+        end
+
+        html
       end
-    end
+
+      def check_content_type(content_type)
+        case content_type
+        when /^image\/gif/
+          true
+        when /^image\/jpg/
+          true
+        when /^image\/jpeg/
+          true
+        when /^image\/png/
+          true
+        else
+          false
+        end
+      end
+
+      def each_attachments(part)
+        @images = [] unless defined?(@images)
+
+        if part.multipart?
+          part.parts.each do |part|
+            if part.multipart?
+              each_attachments(part)
+            else
+              content_type = part.header['content-type'].to_s
+              next unless check_content_type(content_type)
+
+              content_id   = part.header['content-id'].to_s.sub(/^</, '').sub(/>$/, '')
+              content_id   = part.filename if content_id.blank?
+              filename     = part.filename
+              @images << DecorationMail::Image.new(content_id, content_type, filename, part)
+            end
+          end
+        end
+      end
   end
 end
