@@ -40,7 +40,7 @@ module DecorationMail
       end
 
       def parse_html(html)
-        html = html.body.to_s.encode("UTF-8")
+        html = html.body.to_s.force_encoding(html.charset).encode("UTF-8")
         html = Hpricot.parse(html)
 
         if html.search("body").empty?
