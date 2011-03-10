@@ -1,8 +1,8 @@
-== DecorationMailとは
+= DecorationMailとは
 携帯電話で作成されたデコレーションメール（デコメール）をRubyで扱いやすくするためのライブラリです。
 今のところ受信したメールをパースするのみでデコメールの新規作成は出来ません。そのうち実装するかもしれません。。。
 
-=== 特徴
+== 特徴
 * Rails3から採用されたActionMailerのバックエンド、Mailライブラリを少し拡張して利用します。
 * デコメールのHTMLをXHTMLとインラインCSSに変換します。
 * デコメールのHTMLからHTMLタグ、HEADタグ、BODYタグが削除されて本文のみ取得出来ます。
@@ -55,3 +55,6 @@ MogileFSなどのストレージを利用する場合に使用すると便利で
 
   # 本文下部に追加
   @html = @deco.save(:other_images => :bottom) do |image|
+
+=== コピーライト
+Copyright (C) 2011 Dai Akatsuka, released under the MIT license
