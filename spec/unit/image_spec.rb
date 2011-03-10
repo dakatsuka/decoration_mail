@@ -14,7 +14,7 @@ describe DecorationMail::Image do
   subject { @image }
 
   it { should respond_to :path }
-  its(:read) { should eql @mail.attachments.first.read }
+  its(:read) { should eql @mail.attachments.first.decoded }
   its(:content_id) { should eql "cid:01@110207.142735@______F03B@docomo.ne.jp" }
   its(:filename) { should eql "06_gochisou_header.gif" }
   its(:extension) { should eql "gif" }
