@@ -2,6 +2,15 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
 describe DecorationMail::Base do
+  context "when subject is blank" do
+    before do
+      @mail = Mail.read(File.expand_path('../../resources/docomo_decoration_with_attachment.eml', __FILE__))
+      @mail.subject = nil
+    end
+    subject { @mail.decoration }
+    its(:subject) { should be_nil }
+  end
+
   context "received DoCoMo" do
     before do
       @mail = Mail.read(File.expand_path('../../resources/docomo_decoration_with_attachment.eml', __FILE__))

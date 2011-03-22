@@ -6,7 +6,7 @@ module DecorationMail
 
     def initialize(mail)
       each_attachments(mail)
-      @subject     = mail.subject.encode("UTF-8")
+      @subject     = mail.subject.blank? ? nil : mail.subject.encode("UTF-8")
       @body_text   = parse_text(mail.text_part)
       @body_html   = parse_html(mail.html_part)
     end
