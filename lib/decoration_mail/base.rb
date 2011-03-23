@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'kconv'
 
 module DecorationMail
   class Base
@@ -6,7 +7,7 @@ module DecorationMail
 
     def initialize(mail)
       each_attachments(mail)
-      @subject     = mail.subject.blank? ? nil : mail.subject.encode("UTF-8")
+      @subject     = mail.subject.blank? ? nil : mail.subject.toutf8
       @body_text   = parse_text(mail.text_part)
       @body_html   = parse_html(mail.html_part)
     end
@@ -36,11 +37,11 @@ module DecorationMail
 
     private
       def parse_text(text)
-        text.to_s.encode("UTF-8")
+        text.to_s.toutf8
       end
 
       def parse_html(html)
-        html = html.body.to_s.force_encoding(html.charset).encode("UTF-8")
+        html = html.body.to_s.toutf8
         html = Hpricot.parse(html)
 
         if html.search("body").empty?
