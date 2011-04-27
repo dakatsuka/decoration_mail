@@ -1,16 +1,14 @@
 require 'rake'
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 require 'rake/rdoctask'
 
 desc 'Default: run unit tests.'
-task :default => :test
+task :default => :spec
 
 desc 'Test the decoration_mail plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rspec_opts = ['-c --backtrace']
 end
 
 desc 'Generate documentation for the decoration_mail plugin.'
