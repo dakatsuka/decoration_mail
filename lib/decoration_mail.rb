@@ -2,7 +2,6 @@
 $:.unshift(File.dirname(__FILE__))
 
 require 'mail'
-require 'hpricot'
 
 require 'decoration_mail/converter'
 require 'decoration_mail/image'

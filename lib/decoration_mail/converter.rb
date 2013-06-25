@@ -14,11 +14,10 @@ module DecorationMail
     private
     def self.convert_body_to_div(html)
       html.search("body").each do |body|
-        if body[:bgcolor]
-          body.swap('<div style="background-color:' + body[:bgcolor] + ';">' + body.inner_html + '</div>')
-        else
-          body.swap("<div>#{body.inner_html}</div>")
-        end
+        body.name = 'div'
+        bgcolor = body[:bgcolor]
+        body.attributes.each{|k, v| body.remove_attribute k}
+        body[:style] = "background-color:#{bgcolor};" if bgcolor
       end
       html
     end
@@ -27,7 +26,7 @@ module DecorationMail
       html.search("font").each do |element|
         if element[:color]
           str = "<span>#{element.inner_html}</span>"
-          tmp = Hpricot.parse(str).search("span")
+          tmp = Nokogiri.HTML(str).search("span")
           tmp.first[:style] = "color:#{element[:color].downcase};"
           element.swap(tmp.to_html)
         end
@@ -39,7 +38,7 @@ module DecorationMail
       html.search("font").each do |element|
         if element[:size]
           str = "<span>#{element.inner_html}</span>"
-          tmp = Hpricot.parse(str).search("span")
+          tmp = Nokogiri.HTML(str).search("span")
 
           case element[:size]
           when "1"
@@ -69,7 +68,7 @@ module DecorationMail
       html.search("div").each do |element|
         if element[:align]
           str = "<div>#{element.inner_html}</div>"
-          tmp = Hpricot.parse(str).search "div"
+          tmp = Nokogiri.HTML(str).search "div"
 
           tmp.first[:style] = "text-align:#{element[:align]};"
           element.swap(tmp.to_html)

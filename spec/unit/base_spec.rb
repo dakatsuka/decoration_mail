@@ -38,25 +38,25 @@ describe DecorationMail::Base do
       it "HTMLが返るべき" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("div").should_not be_empty
+        Nokogiri.parse(html).search("div").should_not be_empty
       end
 
       it "HTMLにはHTMLタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("html").should be_empty
+        Nokogiri.parse(html).search("html").should be_empty
       end
 
       it "HTMLにはHEADタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("head").should be_empty
+        Nokogiri.parse(html).search("head").should be_empty
       end
 
       it "HTMLにはBODYタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("body").should be_empty
+        Nokogiri.parse(html).search("body").should be_empty
       end
 
       it "ブロック変数にパスを渡すとIMGタグのSRCが書き換わるべき" do
@@ -105,25 +105,25 @@ describe DecorationMail::Base do
       it "HTMLが返るべき" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("div").should_not be_empty
+        Nokogiri.parse(html).search("div").should_not be_empty
       end
 
       it "HTMLにはHTMLタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("html").should be_empty
+        Nokogiri.parse(html).search("html").should be_empty
       end
 
       it "HTMLにはHEADタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("head").should be_empty
+        Nokogiri.parse(html).search("head").should be_empty
       end
 
       it "HTMLにはBODYタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("body").should be_empty
+        Nokogiri.parse(html).search("body").should be_empty
       end
 
       it "ブロック変数にパスを渡すとIMGタグのSRCが書き換わるべき" do
@@ -172,25 +172,25 @@ describe DecorationMail::Base do
       it "HTMLが返るべき" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("div").should_not be_empty
+        Nokogiri.parse(html).search("div").should_not be_empty
       end
 
       it "HTMLにはHTMLタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("html").should be_empty
+        Nokogiri.parse(html).search("html").should be_empty
       end
 
       it "HTMLにはHEADタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("head").should be_empty
+        Nokogiri.parse(html).search("head").should be_empty
       end
 
       it "HTMLにはBODYタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("body").should be_empty
+        Nokogiri.parse(html).search("body").should be_empty
       end
 
       it "ブロック変数にパスを渡すとIMGタグのSRCが書き換わるべき" do
@@ -237,25 +237,25 @@ describe DecorationMail::Base do
       it "HTMLが返るべき" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("div").should_not be_empty
+        Nokogiri.parse(html).search("div").should_not be_empty
       end
 
       it "HTMLにはHTMLタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("html").should be_empty
+        Nokogiri.parse(html).search("html").should be_empty
       end
 
       it "HTMLにはHEADタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("head").should be_empty
+        Nokogiri.parse(html).search("head").should be_empty
       end
 
       it "HTMLにはBODYタグが含まれない" do
         html = subject.save do |image|
         end
-        Hpricot.parse(html).search("body").should be_empty
+        Nokogiri.parse(html).search("body").should be_empty
       end
 
       it "ブロック変数にパスを渡すとIMGタグのSRCが書き換わるべき" do

@@ -25,9 +25,9 @@ module DecorationMail
         else
           case options[:other_images]
           when :top
-            @body_html = Hpricot("<div style='text-align:center;'><img src='#{image.path ? image.path : image.filename}' /></div><br />" + @body_html.to_html)
+            @body_html = Nokogiri.HTML("<div style='text-align:center;'><img src='#{image.path ? image.path : image.filename}' /></div><br />" + @body_html.to_html)
           when :bottom
-            @body_html = Hpricot(@body_html.to_html + "<br /><div style='text-align:center;'><img src='#{image.path ? image.path : image.filename}' /></div>")
+            @body_html = Nokogiri.HTML(@body_html.to_html + "<br /><div style='text-align:center;'><img src='#{image.path ? image.path : image.filename}' /></div>")
           end
         end
       end
@@ -42,7 +42,7 @@ module DecorationMail
 
       def parse_html(html)
         html = html.body.to_s.toutf8
-        html = Hpricot.parse(html)
+        html = Nokogiri.HTML(html)
 
         if html.search("body").empty?
           raise ArgumentError, 'invalid HTML'
