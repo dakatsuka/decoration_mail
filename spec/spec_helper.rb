@@ -22,8 +22,6 @@ expected #{expected}
   end
 
   def convert(str)
-    DecorationMail::Converter.
-      convert_to_xhtml(Nokogiri.parse(str, nil, 'UTF-8')).
-      to_html.chomp
+    DecorationMail::HTML.new(str).to_s
   end
 end

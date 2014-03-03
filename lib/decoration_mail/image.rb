@@ -35,5 +35,9 @@ module DecorationMail
         nil
       end
     end
+
+    def src
+      path || filename
+    end
   end
 end
