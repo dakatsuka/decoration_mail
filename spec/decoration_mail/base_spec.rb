@@ -66,6 +66,13 @@ describe DecorationMail::Base do
         html.should match /http:\/\/exmaple\.com/
       end
 
+      it "imageのpathがnilだと、imgタグ自体が削除されること" do
+        html = subject.save do |image|
+          image.path = nil
+        end
+        html.should_not match /<img/
+      end
+
       it "other_imagesオプションで:topを指定すると添付画像をデコメ上部に貼り付ける" do
         html = subject.save(:other_images => :top) {}
         html.should match /20110205153513\.jpg/

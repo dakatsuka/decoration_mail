@@ -18,15 +18,21 @@ module DecorationMail
     end
 
     def append_img(src)
-      @tree.css('body').children.after(%(<br /><div style="text-align:center;"><img src="#{src}" /></div>))
+      @tree.css('body').children.after(%(<br /><div style="text-align:center;"><img src="#{src}" /></div>)) if src
     end
 
     def prepend_img(src)
-      @tree.css('body').children.before(%(<div style="text-align:center;"><img src="#{src}" /></div><br />))
+      @tree.css('body').children.before(%(<div style="text-align:center;"><img src="#{src}" /></div><br />)) if src
     end
 
     def update_img_src(from, to)
-      @tree.css("img[src=\"#{from}\"]").each{|e| e['src'] = to }
+      @tree.css("img[src=\"#{from}\"]").each do |e|
+        if to
+          e['src'] = to
+        else
+          e.remove
+        end
+      end
     end
 
     def to_s

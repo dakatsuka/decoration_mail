@@ -27,6 +27,14 @@ describe DecorationMail::HTML do
       subject.append_img('http://example.com/img.gif')
       subject.to_s.should == %(<div>ほげほげ<br><div style="text-align:center;"><img src="http://example.com/img.gif"></div>\n</div>)
     end
+
+    context "when src is nil" do
+      before{ subject.append_img(nil) }
+
+      it "ignores the img" do
+        subject.to_s.should == %(<div>ほげほげ</div>)
+      end
+    end
   end
 
   describe "#prepend_img" do
@@ -36,6 +44,14 @@ describe DecorationMail::HTML do
       subject.prepend_img('http://example.com/img.gif')
       subject.to_s.should == %(<div>\n<div style="text-align:center;"><img src="http://example.com/img.gif"></div>\n<br>ほげほげ</div>)
     end
+
+    context "when src is nil" do
+      before{ subject.prepend_img(nil) }
+
+      it "ignores the img" do
+        subject.to_s.should == %(<div>ほげほげ</div>)
+      end
+    end
   end
 
   describe "#update_img_src" do
@@ -44,6 +60,14 @@ describe DecorationMail::HTML do
     it "changes img's src to new one" do
       subject.update_img_src('cid:hoge', 'http://example.com/img.gif')
       subject.to_s.should == %(<div>ほげほげ<img src="http://example.com/img.gif"><img src="fuga.gif">\n</div>)
+    end
+
+    context "when src is nil" do
+      before{ subject.update_img_src('cid:hoge', nil) }
+
+      it "deletes the img tag" do
+        subject.to_s.should == %(<div>ほげほげ<img src="fuga.gif">\n</div>)
+      end
     end
   end
 

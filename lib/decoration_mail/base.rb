@@ -17,7 +17,7 @@ module DecorationMail
         image.instance_eval(&block)
 
         if @html_body.match /#{image.content_id}/
-          @html_body.update_img_src(image.content_id, image.src)
+          @html_body.update_img_src(image.content_id, image.path)
         else
           case options[:other_images]
           when :top
