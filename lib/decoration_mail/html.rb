@@ -4,6 +4,7 @@ module DecorationMail
   class HTML
     def initialize(str)
       @tree = Nokogiri.HTML(str)
+      @unresolved_references = @tree.css('img').map{|img| img['src'] }
       raise ArgumentError, 'invalid HTML' if @tree.search("body").empty?
 
       convert_font_color_to_css
@@ -26,6 +27,7 @@ module DecorationMail
     end
 
     def update_img_src(from, to)
+      @unresolved_references.delete(from)
       @tree.css("img[src=\"#{from}\"]").each do |e|
         if to
           e['src'] = to
@@ -36,6 +38,7 @@ module DecorationMail
     end
 
     def to_s
+      remove_invalid_references
       to_div.to_html
     end
 
@@ -116,6 +119,20 @@ module DecorationMail
           element.swap('<div style="display:-wap-marquee;-wap-marquee-style:alternate;-wap-marquee-loop:infinite;">' + element.inner_html + '</div>')
         else
           element.swap('<div style="display:-wap-marquee;-wap-marquee-loop:infinite;">' + element.inner_html + '</div>')
+        end
+      end
+    end
+
+    def invalid_references
+      @unresolved_references.reject do |src|
+        %w(http https data).include? URI.parse(src).scheme
+      end
+    end
+
+    def remove_invalid_references
+      invalid_references.each do |src|
+        @tree.css("img[src=\"#{src}\"]").each do |e|
+          e.remove
         end
       end
     end

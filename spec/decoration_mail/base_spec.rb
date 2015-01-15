@@ -283,4 +283,18 @@ describe DecorationMail::Base do
       end
     end
   end
+
+  context "with imcomplete HTML mail(contains img tag but image part is omitted)" do
+    subject do
+      Mail.read(File.expand_path('../../resources/incomplete_decoration.eml', __FILE__)).decoration
+    end
+
+    it "has no images" do
+      expect(subject.images).to be_empty
+    end
+
+    it "omits img tag in returned HTML" do
+      expect(subject.save{}).not_to match '<img'
+    end
+  end
 end

@@ -59,14 +59,14 @@ describe DecorationMail::HTML do
 
     it "changes img's src to new one" do
       subject.update_img_src('cid:hoge', 'http://example.com/img.gif')
-      subject.to_s.should == %(<div>ほげほげ<img src="http://example.com/img.gif"><img src="fuga.gif">\n</div>)
+      subject.to_s.should == %(<div>ほげほげ<img src="http://example.com/img.gif">\n</div>)
     end
 
     context "when src is nil" do
       before{ subject.update_img_src('cid:hoge', nil) }
 
       it "deletes the img tag" do
-        subject.to_s.should == %(<div>ほげほげ<img src="fuga.gif">\n</div>)
+        subject.to_s.should == %(<div>ほげほげ</div>)
       end
     end
   end
@@ -87,6 +87,52 @@ describe DecorationMail::HTML do
       it "should not contain it" do
         '<body onclick="alert(\'a\')">ほげほげ</body>'.
           should be_converted_to '<div>ほげほげ</div>'
+      end
+    end
+
+    context "when the html contains cid reference which is not resloved by #update_img_src" do
+      subject{ DecorationMail::HTML.new('<body>ほげほげ<img src="cid:hoge"><img src="cid:fuga"></body>') }
+      before do
+        subject.update_img_src('cid:hoge', 'hoge.gif')
+      end
+
+      it "removes the img tag" do
+        subject.to_s.should == %(<div>ほげほげ<img src="hoge.gif">\n</div>)
+      end
+    end
+
+    context "when the html contains img tag whose src is relative path" do
+      it "removes the img tag" do
+        '<body>ほげほげ<img src="../hoge.gif" /></body>'.
+          should be_converted_to '<div>ほげほげ</div>'
+      end
+    end
+
+    context "when the html contains img tag whose src is absolute URI with file scheme" do
+      it "removes the img tag" do
+        '<body>ほげほげ<img src="file:///hoge.gif" /></body>'.
+          should be_converted_to '<div>ほげほげ</div>'
+      end
+    end
+
+    context "when the html contains img tag whose src is absolute URI with http scheme" do
+      it "keeps the img tag" do
+        '<body>ほげほげ<img src="http://example.com/hoge.gif" /></body>'.
+          should be_converted_to %(<div>ほげほげ<img src="http://example.com/hoge.gif">\n</div>)
+      end
+    end
+
+    context "when the html contains img tag whose src is absolute URI with https scheme" do
+      it "keeps the img tag" do
+        '<body>ほげほげ<img src="https://example.com/hoge.gif" /></body>'.
+          should be_converted_to %(<div>ほげほげ<img src="https://example.com/hoge.gif">\n</div>)
+      end
+    end
+
+    context "when the html contains img tag whose src is URI with data scheme" do
+      it "keeps the img tag" do
+        '<body>ほげほげ<img src="data:image/gif;base64,R0lG" /></body>'.
+          should be_converted_to %(<div>ほげほげ<img src="data:image/gif;base64,R0lG">\n</div>)
       end
     end
   end
